@@ -45,17 +45,14 @@ export default function LiquidityPage() {
           Uniswap V2 pools on {ACTIVE_CHAIN.name}
         </h2>
         <p className="mt-1.5 text-sm text-muted">
-          For fixed-supply launches, and for coins that have already graduated. A coin still on its
-          bonding curve trades here without a pool and seeds one itself when it fills.
+          For fixed-supply launches, and for coins that have already graduated.
+          A coin still on its bonding curve trades here without a pool and seeds
+          one itself when it fills.
         </p>
       </div>
 
       {!HAS_ROUTER ? (
-        <Notice tone="warn">
-          No Uniswap V2 router is configured. Set{" "}
-          <span className="mono">NEXT_PUBLIC_ROUTER_ADDRESS</span> to a router deployed on{" "}
-          {ACTIVE_CHAIN.name} to manage pools from here.
-        </Notice>
+        <Notice tone="warn">No Uniswap V2 router is configured.</Notice>
       ) : (
         <div className="flex flex-col gap-5">
           <div className="card flex flex-col gap-4">
@@ -100,7 +97,8 @@ export default function LiquidityPage() {
                         size={27}
                       />
                       <span className="flex-1 text-left">
-                        {entry.name} <span className="mono text-dim">${entry.symbol}</span>
+                        {entry.name}{" "}
+                        <span className="mono text-dim">${entry.symbol}</span>
                       </span>
                       <span className="mono text-[12.5px] text-dim">
                         {shortenAddress(entry.address)}
@@ -115,8 +113,9 @@ export default function LiquidityPage() {
           {coin ? (
             coin.curveSupply > 0n && !coin.graduated ? (
               <Notice>
-                <strong>{coin.name}</strong> is still on its bonding curve, so it does not need a
-                pool yet — it opens one automatically at graduation and burns the LP tokens.{" "}
+                <strong>{coin.name}</strong> is still on its bonding curve, so
+                it does not need a pool yet — it opens one automatically at
+                graduation and burns the LP tokens.{" "}
                 <Link href={`/coin/${coin.address}`} className="text-accent">
                   Trade it here
                 </Link>
@@ -133,7 +132,9 @@ export default function LiquidityPage() {
                   />
                   <div>
                     <div className="font-semibold">{coin.name}</div>
-                    <div className="mono text-[12.5px] text-dim">${coin.symbol}</div>
+                    <div className="mono text-[12.5px] text-dim">
+                      ${coin.symbol}
+                    </div>
                   </div>
                   <div className="flex-1" />
                   <Link href={`/coin/${coin.address}`} className="btn btn-sm">

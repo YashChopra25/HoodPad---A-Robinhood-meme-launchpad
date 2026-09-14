@@ -6,6 +6,20 @@ import { shortenAddress } from "@/lib/format";
 const HEADING = "mb-2.5 font-mono text-[10.5px] font-medium tracking-[0.12em] text-muted uppercase";
 const LIST = "m-0 grid list-none gap-1.5 p-0 [&_a:hover]:text-fg";
 
+/** Builder credit. Links with an empty value are left out. */
+const BUILDER = {
+  name: "Yash Chopra",
+  twitter: "YashChopra25",
+  github: "https://github.com/YashChopra25",
+  portfolio: "https://yashchopraportfolio.vercel.app/",
+};
+
+const BUILDER_LINKS = [
+  { label: "X", href: BUILDER.twitter ? `https://x.com/${BUILDER.twitter}` : "" },
+  { label: "GitHub", href: BUILDER.github },
+  { label: "Portfolio", href: BUILDER.portfolio },
+].filter((link) => link.href);
+
 export default function Footer() {
   const explorer = ACTIVE_CHAIN.blockExplorers?.default;
 
@@ -24,13 +38,15 @@ export default function Footer() {
               {SITE_NAME}
             </div>
             <p className="max-w-[520px]">
-              <strong className="text-muted">High risk.</strong> Launching and trading tokens is
-              speculative — most go to zero. Nothing here is financial advice.
+              <strong className="text-muted">High risk.</strong> Launching and
+              trading tokens is speculative — most go to zero. Nothing here is
+              financial advice.
             </p>
             <p className="max-w-[520px]">
-              Not affiliated with Robinhood Markets, Inc. &ldquo;Robinhood Chain&rdquo; refers to the
-              public Arbitrum Orbit network. Non-custodial: every transaction is signed by your own
-              wallet and no funds are ever held here.
+              Not affiliated with Robinhood Markets, Inc. &ldquo;Robinhood
+              Chain&rdquo; refers to the public Arbitrum Orbit network.
+              Non-custodial: every transaction is signed by your own wallet and
+              no funds are ever held here.
             </p>
           </div>
 
@@ -64,8 +80,16 @@ export default function Footer() {
               ) : null}
               {FACTORY_ADDRESS ? (
                 <li>
-                  <a href={explorerAddressUrl(FACTORY_ADDRESS)} target="_blank" rel="noreferrer">
-                    Factory <span className="mono">{shortenAddress(FACTORY_ADDRESS)}</span> ↗
+                  <a
+                    href={explorerAddressUrl(FACTORY_ADDRESS)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Factory{" "}
+                    <span className="mono">
+                      {shortenAddress(FACTORY_ADDRESS)}
+                    </span>{" "}
+                    ↗
                   </a>
                 </li>
               ) : null}
@@ -78,7 +102,20 @@ export default function Footer() {
           <span>
             © {new Date().getFullYear()} {SITE_NAME}
           </span>
-          <span>{`${ACTIVE_CHAIN.name} // non-custodial`}</span>
+          <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            Built by <span className="text-fg">{BUILDER.name}</span>
+            {BUILDER_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="text-accent hover:text-accent-hot"
+              >
+                {link.label} ↗
+              </a>
+            ))}
+          </span>
         </div>
       </div>
     </footer>
