@@ -76,7 +76,7 @@ are all read from event logs. These control that scan.
 
 | Variable | Default | Notes |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_NAME` | `RobinHood Launchpad` | Branding |
+| `NEXT_PUBLIC_SITE_NAME` | `Hoodpad` | Branding |
 | `NEXT_PUBLIC_ETH_USD` | unset | Optional rate. USD figures are hidden entirely when unset, rather than showing a stale or invented number. |
 
 ### Scripts only

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { HoodpadMark } from "@/components/Logo";
 import WalletButton from "@/components/WalletButton";
 import { ACTIVE_CHAIN, IS_TESTNET } from "@/lib/chains";
 import { SITE_NAME } from "@/lib/env";
@@ -42,17 +43,14 @@ export default function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur-lg backdrop-saturate-150">
       <nav className="page flex h-[60px] items-center gap-[18px] max-sm:gap-2" aria-label="Main">
-        <Link href="/" className="flex shrink-0 items-center gap-[9px] text-base font-bold tracking-[-0.035em]">
-          <span
-            className="grid size-7 place-items-center rounded-lg bg-accent text-sm text-accent-ink shadow-[0_0_22px_rgb(200_240_49/0.28)]"
-            aria-hidden="true"
-          >
-            ◆
-          </span>
+        <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label={`${SITE_NAME} home`}>
+          <HoodpadMark className="size-8" />
           <span className="max-sm:hidden">
-            {SITE_NAME}
-            <small className="mt-0.5 block font-mono text-[9.5px] leading-none font-medium tracking-[0.14em] text-dim uppercase">
-              {ACTIVE_CHAIN.name}
+            <span className="block text-[17px] leading-none font-bold tracking-[-0.04em]">
+              {SITE_NAME}
+            </span>
+            <small className="mt-1 block font-mono text-[9.5px] leading-none font-medium tracking-[0.14em] text-dim uppercase">
+              Robinhood Launchpad
             </small>
           </span>
         </Link>

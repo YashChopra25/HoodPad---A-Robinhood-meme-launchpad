@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HoodpadMark } from "@/components/Logo";
 import { ACTIVE_CHAIN, explorerAddressUrl } from "@/lib/chains";
 import { FACTORY_ADDRESS, SITE_NAME } from "@/lib/env";
 import { shortenAddress } from "@/lib/format";
@@ -29,12 +30,7 @@ export default function Footer() {
         <div className="grid grid-cols-[minmax(0,1.4fr)_repeat(2,minmax(0,0.6fr))] gap-7 max-lg:grid-cols-2">
           <div className="flex flex-col gap-2.5 max-lg:col-span-full">
             <div className="flex items-center gap-[9px] text-base font-bold tracking-[-0.035em] text-fg">
-              <span
-                className="grid size-7 place-items-center rounded-lg bg-accent text-sm text-accent-ink shadow-[0_0_22px_rgb(200_240_49/0.28)]"
-                aria-hidden="true"
-              >
-                ◆
-              </span>
+              <HoodpadMark className="size-7" />
               {SITE_NAME}
             </div>
             <p className="max-w-[520px]">

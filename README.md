@@ -29,7 +29,7 @@ vesting and factory contracts still to be built.
 
 ---
 
-# RobinHood Launchpad
+# Hoodpad
 
 A memecoin launchpad for **Robinhood Chain** — the public Arbitrum Orbit network
 that uses ETH for gas (mainnet `4663`, testnet `46630`).

@@ -130,7 +130,7 @@ export const RPC_BATCH_SIZE = integer(process.env.NEXT_PUBLIC_RPC_BATCH_SIZE, 20
 export const LOG_CHUNK = integer(process.env.NEXT_PUBLIC_LOG_CHUNK, 9000);
 export const TRADE_LOOKBACK_BLOCKS = integer(process.env.NEXT_PUBLIC_TRADE_LOOKBACK, 200000);
 
-export const SITE_NAME = text(process.env.NEXT_PUBLIC_SITE_NAME, "RobinHood Launchpad");
+export const SITE_NAME = text(process.env.NEXT_PUBLIC_SITE_NAME, "Hoodpad");
 
 /** Optional ETH/USD rate; USD figures are hidden entirely when unset. */
 export const ETH_USD = decimal(process.env.NEXT_PUBLIC_ETH_USD);
