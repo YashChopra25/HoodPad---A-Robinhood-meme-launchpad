@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, JetBrains_Mono } from "next/font/google";
 import Footer from "@/components/Footer";
+import Aurora from "@/components/fx/Aurora";
+import StreamField from "@/components/fx/StreamField";
 import Nav from "@/components/Nav";
 import TickerTape from "@/components/TickerTape";
 import { ToastProvider } from "@/components/ui/Toast";
@@ -37,6 +39,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <WalletProvider>
           <ToastProvider>
+            {/* Ambient background layers, painted beneath the app. */}
+            <Aurora />
+            <StreamField />
             <div className="relative z-1 flex min-h-dvh flex-col">
               <Nav />
               <TickerTape />
