@@ -1,0 +1,52 @@
+{
+  "name": "example",
+  "merkleRoot": "0x59a8b62ffc47f215505b3734ba72b8e377f866c85883e00b85d932c04f1ce5f2",
+  "total": "10000000000000000000000",
+  "totalFormatted": "10000",
+  "decimals": 18,
+  "recipients": 4,
+  "generatedAt": "2026-09-09T09:13:04.352Z",
+  "leafEncoding": [
+    "uint256",
+    "address",
+    "uint256"
+  ],
+  "claims": {
+    "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266": {
+      "index": 0,
+      "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "amount": "1000000000000000000000",
+      "proof": [
+        "0x56bdc8b158abd7dbf0363313ce5c93605df94d050eb98e148b2f9f101fa57e2f",
+        "0xc4483ad562a449aba874eea6bb1aa891355a4cbcad72bd13aece81f25be030e4"
+      ]
+    },
+    "0x70997970c51812dc3a010c7d01b50e0d17dc79c8": {
+      "index": 1,
+      "account": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "amount": "2500000000000000000000",
+      "proof": [
+        "0x469966df71e65927616016f1af664741944b087fa23e369987bb90832d8c58d9",
+        "0x6cd2c59384915728254afedcb8a9b00743ebc48310f85041149e2891c53f0293"
+      ]
+    },
+    "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc": {
+      "index": 2,
+      "account": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "amount": "500000000000000000000",
+      "proof": [
+        "0x08ce55ebbf48e77dd91d38234b1d46aab5f529985c5bccc4e5069d5c83821031",
+        "0x6cd2c59384915728254afedcb8a9b00743ebc48310f85041149e2891c53f0293"
+      ]
+    },
+    "0x90f79bf6eb2c4f870365e785982e1f101e93b906": {
+      "index": 3,
+      "account": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+      "amount": "6000000000000000000000",
+      "proof": [
+        "0xa99f83ac05276adb4cd78725f1ad23abf3e2e9e3a1bbd65b5461ca2749f9780f",
+        "0xc4483ad562a449aba874eea6bb1aa891355a4cbcad72bd13aece81f25be030e4"
+      ]
+    }
+  }
+}

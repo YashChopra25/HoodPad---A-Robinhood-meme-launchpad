@@ -1,0 +1,19 @@
+# Foundry build output
+out/
+cache/
+broadcast/*/dry-run/
+broadcast/*/31337/          # local Anvil runs are not worth keeping
+
+# lib/ is NOT ignored: forge-std and openzeppelin-contracts are git submodules
+# pinned to exact tags, which is what makes a fresh clone reproducible.
+#   git submodule update --init --recursive
+# or, equivalently, `forge install` inside this directory.
+
+# Secrets — never commit a real key or RPC credential
+.env
+.env.*
+!.env.example
+
+# Coverage
+lcov.info
+coverage/

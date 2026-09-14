@@ -1,0 +1,66 @@
+# Foundry configuration for the launchpad contracts.
+#
+# This project lives in `contracts/` rather than the repository root because the
+# root `src/` directory belongs to the Next.js front end. Foundry therefore gets
+# a clean, conventional layout of its own: src/ script/ test/ lib/.
+
+[profile.default]
+src = "src"
+out = "out"
+test = "test"
+script = "script"
+libs = ["lib"]
+
+# OpenZeppelin v5 requires ^0.8.20; pinning the compiler keeps local builds,
+# CI and the verified bytecode on Etherscan byte-identical.
+solc_version = "0.8.30"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+bytecode_hash = "none"
+
+remappings = [
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+    "forge-std/=lib/forge-std/src/",
+]
+
+# No cheatcode needs shell access, so leave FFI off.
+ffi = false
+
+# The linter is scoped to production code. Tests deliberately do things it
+# flags — calling `transferFrom` with an arbitrary `from`, repeating literals,
+# using cheatcodes — and dependencies are not ours to lint.
+# The globs must end in *.sol; a bare `test/**` silently matches nothing.
+[lint]
+ignore = ["test/**/*.sol", "lib/**/*.sol"]
+
+[profile.ci]
+verbosity = 3
+fuzz = { runs = 1000 }
+
+# Endpoints are read from the environment; nothing secret is committed.
+# `forge script ... --rpc-url sepolia` resolves through this table.
+[rpc_endpoints]
+sepolia = "${SEPOLIA_RPC_URL}"
+anvil = "http://127.0.0.1:8545"
+# Robinhood Chain is a public Arbitrum Orbit network, fully EVM-compatible.
+# These are the public endpoints, spelled out because foundry.toml has no
+# syntax for a default: `${VAR:-fallback}` is read as a variable literally
+# named "VAR:-fallback" and fails. To use a private provider instead, pass the
+# URL directly: `--rpc-url $RH_RPC_URL`.
+robinhood = "https://rpc.mainnet.chain.robinhood.com"
+robinhood_testnet = "https://rpc.testnet.chain.robinhood.com"
+
+# Sepolia verifies through Etherscan and needs an API key. Robinhood Chain runs
+# Blockscout, which needs none — but `--verifier blockscout` must be passed
+# explicitly on the command line; see docs/02-deployment.md.
+[etherscan]
+sepolia = { key = "${ETHERSCAN_API_KEY}", chain = 11155111 }
+robinhood = { key = "", url = "https://robinhoodchain.blockscout.com/api/", chain = 4663 }
+robinhood_testnet = { key = "", url = "https://explorer.testnet.chain.robinhood.com/api/", chain = 46630 }
+
+[fmt]
+line_length = 100
+tab_width = 4
+bracket_spacing = false
+int_types = "long"
