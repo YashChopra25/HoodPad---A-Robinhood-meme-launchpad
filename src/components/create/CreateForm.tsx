@@ -65,6 +65,8 @@ const INITIAL: FormState = {
   openingBuy: "",
 };
 
+const TWO_COLUMNS = "grid grid-cols-2 gap-3.5 max-sm:grid-cols-1";
+
 export default function CreateForm() {
   const router = useRouter();
   const wallet = useWalletContext();
@@ -151,7 +153,7 @@ export default function CreateForm() {
   const show = (key: keyof FormState) => (submitted ? errors[key] : undefined);
 
   return (
-    <div className="stack" style={{ gap: 22 }}>
+    <div className="flex flex-col gap-[22px]">
       {!HAS_FACTORY ? (
         <Notice tone="warn">
           No launchpad factory is configured for {ACTIVE_CHAIN.name}, so this coin deploys straight
@@ -162,10 +164,8 @@ export default function CreateForm() {
         </Notice>
       ) : null}
 
-      <section className="card card-pad-lg stack" style={{ gap: 18 }}>
-        <div className="card-title" style={{ marginBottom: 0 }}>
-          Identity
-        </div>
+      <section className="card flex flex-col gap-[18px] p-6">
+        <div className="card-title">Identity</div>
 
         <ImagePicker value={form.image} onChange={(value) => set("image", value)} />
         {USE_HARDCODED_LAUNCH_IMAGE ? (
@@ -175,7 +175,7 @@ export default function CreateForm() {
           </Notice>
         ) : null}
 
-        <div className="grid-2">
+        <div className={TWO_COLUMNS}>
           <Field label="Name" htmlFor="name" error={show("name")}>
             <input
               id="name"
@@ -225,7 +225,7 @@ export default function CreateForm() {
           />
         </Field>
 
-        <div className="grid-2">
+        <div className={TWO_COLUMNS}>
           <Field label="Website" htmlFor="website" error={show("website")}>
             <input
               id="website"
@@ -257,18 +257,16 @@ export default function CreateForm() {
         </Field>
       </section>
 
-      <section className="card card-pad-lg stack" style={{ gap: 16 }}>
+      <section className="card flex flex-col gap-4 p-6">
         <div>
-          <div className="card-title" style={{ marginBottom: 6 }}>
-            How it trades
-          </div>
+          <div className="card-title mb-1.5">How it trades</div>
           <p className="field-hint">
             A curve launch is tradable the moment it exists. A fixed launch mints everything to you
             and leaves the market to you.
           </p>
         </div>
 
-        <div className="segmented" style={{ alignSelf: "flex-start" }}>
+        <div className="segmented self-start">
           <button type="button" aria-pressed={form.mode === "curve"} onClick={() => set("mode", "curve")}>
             Bonding curve
           </button>
@@ -287,7 +285,7 @@ export default function CreateForm() {
                 economics.graduationTarget,
                 3,
               )} ${NATIVE_SYMBOL} raised the curve closes, and everything left on it goes into a Uniswap V2 pool with the LP tokens burned.`}
-              aside={<span className="mono dim">{form.curvePercent || "0"}%</span>}
+              aside={<span className="mono text-dim">{form.curvePercent || "0"}%</span>}
             >
               <input
                 id="curve"
@@ -297,7 +295,7 @@ export default function CreateForm() {
                 step={5}
                 value={Number(form.curvePercent) || 80}
                 onChange={(event) => set("curvePercent", event.target.value)}
-                style={{ width: "100%", accentColor: "var(--accent)" }}
+                className="w-full accent-accent"
               />
             </Field>
 
@@ -335,11 +333,9 @@ export default function CreateForm() {
         )}
       </section>
 
-      <section className="card card-pad-lg stack" style={{ gap: 12 }}>
+      <section className="card flex flex-col gap-3 p-6">
         <div>
-          <div className="card-title" style={{ marginBottom: 6 }}>
-            Launch protections
-          </div>
+          <div className="card-title mb-1.5">Launch protections</div>
           <p className="field-hint">
             Optional, and all fixed at launch. Every one is written so it can throttle buying but
             can never stop a holder selling.
@@ -387,7 +383,7 @@ export default function CreateForm() {
           checked={form.customTax}
           onChange={(next) => set("customTax", next)}
         >
-          <div className="grid-2">
+          <div className={TWO_COLUMNS}>
             <Field label="Tax rate (%)" htmlFor="taxPercent" error={show("taxPercent")}>
               <input
                 id="taxPercent"

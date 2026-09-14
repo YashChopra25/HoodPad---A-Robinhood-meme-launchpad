@@ -107,7 +107,7 @@ export default function Nav() {
         </form>
 
         {IS_TESTNET ? (
-          <span className="chip chip-warn" title={`Connected to ${ACTIVE_CHAIN.name}`}>
+          <span className="chip chip-warn max-sm:hidden" title={`Connected to ${ACTIVE_CHAIN.name}`}>
             Testnet
           </span>
         ) : null}

@@ -16,7 +16,9 @@ export default function TickerTape() {
   const { coins } = useCoins({ pollMs: 60000, limit: 24 });
   if (coins.length === 0) return null;
 
-  const items = sortCoins(coins, "trending").slice(0, 16);
+  // A short list is repeated so each loop still spans the bar on a quiet chain.
+  const top = sortCoins(coins, "trending").slice(0, 16);
+  const items = Array.from({ length: Math.ceil(8 / top.length) }, () => top).flat();
 
   return (
     <div
@@ -36,11 +38,11 @@ export default function TickerTape() {
               <span className="live-dot" />
               Live
             </span>
-            {items.map((coin) => {
+            {items.map((coin, index) => {
               const live = coin.curveSupply > 0n && !coin.graduated;
               return (
                 <Link
-                  key={coin.address}
+                  key={`${index}-${coin.address}`}
                   href={`/coin/${coin.address}`}
                   className="group/item inline-flex items-center gap-[7px] font-mono text-xs whitespace-nowrap text-muted"
                   tabIndex={copy === 1 ? -1 : undefined}
