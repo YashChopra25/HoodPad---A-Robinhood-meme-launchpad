@@ -4,6 +4,7 @@ Everything in this repository, in the order you would actually need it.
 
 | | Page | What it covers |
 | --- | --- | --- |
+| — | [Product demo](product-demo.md) | A guided tour for users: launch, trade and graduate a coin, with screenshots. |
 | 1 | [Getting started](01-getting-started.md) | Install, build, test, run the app locally. Start here. |
 | 2 | [Deployment](02-deployment.md) | Deploying to Sepolia and to both Robinhood Chain networks, plus verification. |
 | 3 | [Airdrop](03-airdrop.md) | Running a Merkle airdrop end to end: build the tree, deploy, fund, claim, sweep. |
