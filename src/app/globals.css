@@ -51,6 +51,12 @@
   --animate-glow-pulse: glow-pulse 2.4s ease-in-out infinite;
   --animate-arrow-flow: arrow-flow 2.4s ease-in-out infinite;
 
+  /* The landing horizon: a floor that scrolls toward the viewer, a beam that
+     sweeps across it, and blocks that drop into the chain as they land. */
+  --animate-grid-flow: grid-flow 2.2s linear infinite;
+  --animate-beam: beam 7s ease-in-out infinite;
+  --animate-block-in: block-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+
   /* The forge. Every part shares one 1.8s cycle and lands on the 48% impact
      frame, so hammer, anvil, flash, sparks and coin stay in sync. */
   --animate-strike: strike 1.8s cubic-bezier(0.45, 0, 0.2, 1) infinite;
@@ -156,6 +162,36 @@
     50% {
       color: var(--color-accent);
       filter: drop-shadow(0 0 7px rgb(200 240 49 / 0.75));
+    }
+  }
+
+  /* One cell of the 56px floor grid, so the loop has no seam. */
+  @keyframes grid-flow {
+    to {
+      background-position: 0 56px;
+    }
+  }
+
+  @keyframes beam {
+    0%,
+    100% {
+      transform: translateX(-60%);
+      opacity: 0;
+    }
+    15%,
+    85% {
+      opacity: 1;
+    }
+    50% {
+      transform: translateX(60%);
+    }
+  }
+
+  @keyframes block-in {
+    from {
+      opacity: 0;
+      transform: translateX(28px) scale(0.9);
+      box-shadow: 0 0 40px var(--color-accent);
     }
   }
 
@@ -403,6 +439,36 @@
 
   .eyebrow {
     @apply inline-flex items-center gap-2 rounded-full border border-line-strong bg-panel px-[11px] py-1 font-mono text-[11px] font-medium tracking-[0.1em] text-muted uppercase;
+  }
+
+  /* A heads-up-display frame: a hairline box with neon corner brackets. */
+  .hud {
+    @apply relative rounded-2xl border border-line bg-panel/75 backdrop-blur-sm;
+  }
+
+  .hud::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    border-radius: inherit;
+    --c: var(--color-accent);
+    background:
+      linear-gradient(var(--c), var(--c)) top left / 16px 1.5px,
+      linear-gradient(var(--c), var(--c)) top left / 1.5px 16px,
+      linear-gradient(var(--c), var(--c)) top right / 16px 1.5px,
+      linear-gradient(var(--c), var(--c)) top right / 1.5px 16px,
+      linear-gradient(var(--c), var(--c)) bottom left / 16px 1.5px,
+      linear-gradient(var(--c), var(--c)) bottom left / 1.5px 16px,
+      linear-gradient(var(--c), var(--c)) bottom right / 16px 1.5px,
+      linear-gradient(var(--c), var(--c)) bottom right / 1.5px 16px;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+  }
+
+  /* Mono section index, e.g. "[02] Launch sequence". */
+  .index-label {
+    @apply font-mono text-[11px] font-medium tracking-[0.16em] text-accent uppercase;
   }
 
   .live-dot {

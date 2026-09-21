@@ -16,6 +16,13 @@ import {
  * URI that is written into the contract, so the image lives on-chain and
  * cannot rot; a plain URL is offered for anyone who would rather host it.
  */
+
+/**
+ * Uploads are disabled for now, so only a link can be set. The upload path is
+ * kept intact and still shown, just greyed out — flip this to true to allow it.
+ */
+const UPLOADS_ENABLED = false;
+
 export default function ImagePicker({
   value,
   onChange,
@@ -24,7 +31,7 @@ export default function ImagePicker({
   onChange: (value: string) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [mode, setMode] = useState<"upload" | "url">("upload");
+  const [mode, setMode] = useState<"upload" | "url">(UPLOADS_ENABLED ? "upload" : "url");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [note, setNote] = useState("");
@@ -62,7 +69,9 @@ export default function ImagePicker({
             type="button"
             aria-pressed={mode === "upload"}
             onClick={() => setMode("upload")}
-            className="px-2.5 py-1 text-[12.5px]"
+            disabled={!UPLOADS_ENABLED}
+            title={UPLOADS_ENABLED ? undefined : "Image uploads are disabled for now — add a link"}
+            className="px-2.5 py-1 text-[12.5px] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-muted"
           >
             Upload
           </button>

@@ -1,34 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useBlockNumber } from "@/hooks/useBlockNumber";
 import { useEconomics } from "@/hooks/useEconomics";
 import { ACTIVE_CHAIN } from "@/lib/chains";
-import { getPublicClient } from "@/lib/clients";
 import { FACTORY_ADDRESS, NATIVE_SYMBOL, ROUTER_ADDRESS } from "@/lib/env";
 import { formatEth, formatPercent, shortenAddress } from "@/lib/format";
 
 /** A live readout of the network and launch parameters, polled from the RPC. */
 export default function LiveTerminal() {
   const { economics } = useEconomics();
-  const [block, setBlock] = useState<bigint | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    const tick = async () => {
-      try {
-        const next = await getPublicClient().getBlockNumber();
-        if (!cancelled) setBlock(next);
-      } catch {
-        // A dropped poll just leaves the last block on screen.
-      }
-    };
-    void tick();
-    const timer = setInterval(() => void tick(), 4000);
-    return () => {
-      cancelled = true;
-      clearInterval(timer);
-    };
-  }, []);
+  const block = useBlockNumber();
 
   const rpcHost = hostOf(ACTIVE_CHAIN.rpcUrls.default.http[0]);
 
