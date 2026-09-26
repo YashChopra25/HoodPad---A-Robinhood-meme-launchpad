@@ -72,9 +72,9 @@ export default function Footer() {
               <li>
                 <Link href="/portfolio">Portfolio</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/liquidity">Liquidity</Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
