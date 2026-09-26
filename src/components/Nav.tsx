@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { HoodpadMark } from "@/components/Logo";
+import { HoodpadMark, HoodpadWordmark } from "@/components/Logo";
 import WalletButton from "@/components/WalletButton";
 import { ACTIVE_CHAIN, IS_TESTNET } from "@/lib/chains";
 import { SITE_NAME } from "@/lib/env";
@@ -12,7 +12,7 @@ const LINKS = [
   { href: "/coins", label: "Board" },
   { href: "/create", label: "Create" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/liquidity", label: "Liquidity" },
+  // { href: "/liquidity", label: "Liquidity" },
 ];
 
 export default function Nav() {
@@ -46,9 +46,7 @@ export default function Nav() {
         <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label={`${SITE_NAME} home`}>
           <HoodpadMark className="size-8" />
           <span className="max-sm:hidden">
-            <span className="block text-[17px] leading-none font-bold tracking-[-0.04em]">
-              {SITE_NAME}
-            </span>
+            <HoodpadWordmark className="block h-[15px] w-auto" />
             <small className="mt-1 block font-mono text-[9.5px] leading-none font-medium tracking-[0.14em] text-dim uppercase">
               Robinhood Launchpad
             </small>

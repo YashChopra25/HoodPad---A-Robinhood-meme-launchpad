@@ -1,5 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import { HoodpadMark } from "@/components/Logo";
+import banner from "@/assets/hoodpad-banner.jpg";
 import { ACTIVE_CHAIN, explorerAddressUrl } from "@/lib/chains";
 import { FACTORY_ADDRESS, SITE_NAME } from "@/lib/env";
 import { shortenAddress } from "@/lib/format";
@@ -27,12 +28,25 @@ export default function Footer() {
   return (
     <footer className="border-t border-line bg-elevated pt-[30px] pb-[38px] text-[12.5px] leading-[1.6] text-dim">
       <div className="page">
+        {/* The banner carries the mark and wordmark, so it doubles as the footer's brand lockup. */}
+        <Link
+          href="/create"
+          className="group relative mb-[30px] block overflow-hidden rounded-2xl border border-line transition-colors hover:border-line-hover"
+        >
+          <Image
+            src={banner}
+            alt={SITE_NAME}
+            sizes="(max-width: 1320px) 100vw, 1272px"
+            placeholder="blur"
+            className="aspect-[3/1] h-auto w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+          />
+          <span className="btn btn-primary absolute top-[9%] left-[3.5%] max-sm:hidden">
+            Launch a coin →
+          </span>
+        </Link>
+
         <div className="grid grid-cols-[minmax(0,1.4fr)_repeat(2,minmax(0,0.6fr))] gap-7 max-lg:grid-cols-2">
           <div className="flex flex-col gap-2.5 max-lg:col-span-full">
-            <div className="flex items-center gap-[9px] text-base font-bold tracking-[-0.035em] text-fg">
-              <HoodpadMark className="size-7" />
-              {SITE_NAME}
-            </div>
             <p className="max-w-[520px]">
               <strong className="text-muted">High risk.</strong> Launching and
               trading tokens is speculative — most go to zero. Nothing here is
