@@ -102,13 +102,39 @@ export function byteLength(value: string): number {
   return new TextEncoder().encode(value).length;
 }
 
-/** Accepts data URIs plus http(s) and ipfs links; anything else is dropped. */
-export function safeImageSrc(value: string | null | undefined): string | null {
+/**
+ * Public IPFS gateways, tried in order. ipfs.io rate-limits heavily, so it is
+ * only a last resort.
+ */
+export const IPFS_GATEWAYS = [
+  "https://gateway.pinata.cloud/ipfs/",
+  "https://dweb.link/ipfs/",
+  "https://w3s.link/ipfs/",
+  "https://ipfs.io/ipfs/",
+];
+
+/** Matches `ipfs://<path>` and `http(s)://<host>/ipfs/<path>` links. */
+const IPFS_LINK = /^(?:ipfs:\/\/(?:ipfs\/)?|https?:\/\/[^/]+\/ipfs\/)(.+)$/i;
+
+/**
+ * Accepts data URIs plus http(s) and ipfs links; anything else is dropped.
+ * IPFS links are served through IPFS_GATEWAYS[gateway], so a caller can retry
+ * with the next gateway when one fails; past the last one this returns null.
+ */
+export function safeImageSrc(
+  value: string | null | undefined,
+  gateway = 0,
+): string | null {
   const trimmed = value?.trim();
   if (!trimmed) return null;
-  if (/^data:image\/(png|jpeg|jpg|webp|gif);base64,/i.test(trimmed)) return trimmed;
-  if (/^https?:\/\//i.test(trimmed)) return trimmed;
-  if (/^ipfs:\/\//i.test(trimmed)) return `https://ipfs.io/ipfs/${trimmed.slice(7)}`;
+  if (/^data:image\/(png|jpeg|jpg|webp|gif);base64,/i.test(trimmed)) {
+    return gateway === 0 ? trimmed : null;
+  }
+
+  const ipfs = IPFS_LINK.exec(trimmed);
+  if (ipfs) return gateway < IPFS_GATEWAYS.length ? IPFS_GATEWAYS[gateway] + ipfs[1] : null;
+
+  if (/^https?:\/\//i.test(trimmed)) return gateway === 0 ? trimmed : null;
   return null;
 }
 

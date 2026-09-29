@@ -1,19 +1,16 @@
 /**
  * The image written into a coin's contract at launch.
  *
- * The create form's photo picker is fully wired up — upload, compression,
- * preview and links all work — but for now every launch stores the hardcoded
- * value below instead of what the creator picked. To change it:
- *
- *   - swap HARDCODED_LAUNCH_IMAGE for another data URI, https:// or ipfs:// link
- *   - or set USE_HARDCODED_LAUNCH_IMAGE to false to store the creator's photo
+ * Launches store whatever the creator picked in the create form. Set
+ * USE_HARDCODED_LAUNCH_IMAGE to true to make every launch store
+ * HARDCODED_LAUNCH_IMAGE instead.
  *
  * An owner who has not renounced can still replace the image afterwards from
  * Creator tools on the coin page.
  */
 
 /** When true, launches ignore the picked photo and store HARDCODED_LAUNCH_IMAGE. */
-export const USE_HARDCODED_LAUNCH_IMAGE = true;
+export const USE_HARDCODED_LAUNCH_IMAGE = false;
 
 /** 64×64 PNG, ~330 bytes, so it stays cheap to store on-chain. */
 const HARDCODED_LAUNCH_IMAGE =

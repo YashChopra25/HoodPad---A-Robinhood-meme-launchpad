@@ -19,8 +19,13 @@ export default function CoinAvatar({
   image?: string | null;
   size?: number;
 }) {
-  const [broken, setBroken] = useState(false);
-  const src = broken ? null : safeImageSrc(image);
+  // Each load failure moves on to the next IPFS gateway; for anything else the
+  // first failure leaves no candidates and the fallback mark shows.
+  const [attempt, setAttempt] = useState(0);
+  const src = safeImageSrc(image, attempt);
+  // Tracked per src, so a gateway retry or a new image shows the spinner again.
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
+  const loading = src !== null && loadedSrc !== src;
   const hue = addressHue(address);
 
   return (
@@ -39,10 +44,25 @@ export default function CoinAvatar({
       aria-hidden="true"
     >
       {src ? (
-        // Data URIs and arbitrary remote hosts are both possible here, so this
-        // stays a plain <img> rather than next/image with a host allowlist.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt="" onError={() => setBroken(true)} loading="lazy" />
+        <>
+          {/* Data URIs and arbitrary remote hosts are both possible here, so this
+              stays a plain <img> rather than next/image with a host allowlist. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt=""
+            loading="lazy"
+            // An image can finish before hydration attaches onLoad, so a
+            // cached one is caught here instead of spinning forever.
+            ref={(img) => {
+              if (img?.complete && img.naturalWidth > 0) setLoadedSrc(src);
+            }}
+            onLoad={() => setLoadedSrc(src)}
+            onError={() => setAttempt((n) => n + 1)}
+            className={`[grid-area:1/1] transition-opacity duration-200 ${loading ? "opacity-0" : ""}`}
+          />
+          {loading ? <span className="spinner [grid-area:1/1] text-dim" /> : null}
+        </>
       ) : (
         symbol.slice(0, 3).toUpperCase()
       )}

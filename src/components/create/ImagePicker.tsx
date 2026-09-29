@@ -19,7 +19,7 @@ import {
 
 /**
  * Uploads are disabled for now, so only a link can be set. The upload path is
- * kept intact and still shown, just greyed out — flip this to true to allow it.
+ * kept intact but hidden — flip this to true to switch the picker to uploads.
  */
 const UPLOADS_ENABLED = false;
 
@@ -31,12 +31,18 @@ export default function ImagePicker({
   onChange: (value: string) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [mode, setMode] = useState<"upload" | "url">(UPLOADS_ENABLED ? "upload" : "url");
+  const mode: "upload" | "url" = UPLOADS_ENABLED ? "upload" : "url";
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [note, setNote] = useState("");
 
   const preview = safeImageSrc(value);
+  // A pasted link can take a moment to fetch, so the spinner stays up until
+  // the preview settles either way.
+  const [settledSrc, setSettledSrc] = useState<string | null>(null);
+  const [brokenSrc, setBrokenSrc] = useState<string | null>(null);
+  const loading = preview !== null && settledSrc !== preview;
+  const broken = preview !== null && brokenSrc === preview;
   const inline = value.startsWith("data:");
   const bytes = value ? byteLength(value) : 0;
 
@@ -64,26 +70,6 @@ export default function ImagePicker({
     <div className="flex flex-col gap-1.5">
       <div className="field-label">
         <span>Token image</span>
-        <div className="segmented p-0.5">
-          <button
-            type="button"
-            aria-pressed={mode === "upload"}
-            onClick={() => setMode("upload")}
-            disabled={!UPLOADS_ENABLED}
-            title={UPLOADS_ENABLED ? undefined : "Image uploads are disabled for now — add a link"}
-            className="px-2.5 py-1 text-[12.5px] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-muted"
-          >
-            Upload
-          </button>
-          <button
-            type="button"
-            aria-pressed={mode === "url"}
-            onClick={() => setMode("url")}
-            className="px-2.5 py-1 text-[12.5px]"
-          >
-            Link
-          </button>
-        </div>
       </div>
 
       <div className="flex items-start gap-3.5">
@@ -95,13 +81,25 @@ export default function ImagePicker({
           } ${mode === "upload" ? "cursor-pointer" : "cursor-default"}`}
           aria-label="Choose token image"
         >
-          {preview ? (
-            // The source is a data URI or an arbitrary host, so this stays a
-            // plain <img> rather than next/image with a host allowlist.
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={preview} alt="" />
-          ) : busy ? (
+          {busy ? (
             <span className="spinner" />
+          ) : preview ? (
+            <>
+              {/* The source is a data URI or an arbitrary host, so this stays a
+                  plain <img> rather than next/image with a host allowlist. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={preview}
+                alt=""
+                onLoad={() => setSettledSrc(preview)}
+                onError={() => {
+                  setSettledSrc(preview);
+                  setBrokenSrc(preview);
+                }}
+                className={`[grid-area:1/1] transition-opacity duration-200 ${loading ? "opacity-0" : ""}`}
+              />
+              {loading ? <span className="spinner [grid-area:1/1]" /> : null}
+            </>
           ) : (
             "＋"
           )}
@@ -149,6 +147,12 @@ export default function ImagePicker({
       </div>
 
       {error ? <Notice tone="error">{error}</Notice> : null}
+      {broken && !error ? (
+        <Notice tone="error">
+          That link did not load as an image, so the coin would show no picture. Use a direct
+          image link (ending in .png, .jpg, .webp or .gif) or an ipfs:// link.
+        </Notice>
+      ) : null}
       {note && !error ? <span className="field-hint">{note}</span> : null}
     </div>
   );
