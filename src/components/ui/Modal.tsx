@@ -43,13 +43,13 @@ export default function Modal({ open, title, onClose, children }: Props) {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-90 grid animate-fade place-items-center bg-black/72 p-5 backdrop-blur-sm"
+      className="fixed inset-0 z-90 grid animate-fade place-items-center bg-[rgb(20_16_8/0.35)] p-5 backdrop-blur-[2px] dark:bg-black/70"
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
       <div
-        className="w-full max-w-[420px] animate-rise rounded-[18px] border border-line-strong bg-panel p-5 shadow-[inset_0_1px_0_rgb(255_255_255/0.03),0_18px_44px_rgb(0_0_0/0.5)]"
+        className="w-full max-w-[420px] animate-rise rounded-3xl border border-line bg-bg p-5 shadow-pop"
         role="dialog"
         aria-modal="true"
         aria-label={title}
@@ -57,7 +57,7 @@ export default function Modal({ open, title, onClose, children }: Props) {
         ref={panelRef}
       >
         <div className="mb-4 flex items-center justify-between gap-3">
-          <h2 className="text-[17px]">{title}</h2>
+          <h2 className="pixel text-[22px]">{title}</h2>
           <button className="btn btn-ghost btn-sm" onClick={onClose} aria-label="Close">
             ✕
           </button>

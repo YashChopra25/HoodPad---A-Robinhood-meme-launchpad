@@ -1,23 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Pixelify_Sans } from "next/font/google";
 import Footer from "@/components/Footer";
-import Aurora from "@/components/fx/Aurora";
-import StreamField from "@/components/fx/StreamField";
 import Nav from "@/components/Nav";
-import TickerTape from "@/components/TickerTape";
+import StatusBar from "@/components/StatusBar";
+import { THEME_SCRIPT } from "@/lib/theme";
 import { ToastProvider } from "@/components/ui/Toast";
 import { WalletProvider } from "@/components/WalletProvider";
 import { ACTIVE_CHAIN } from "@/lib/chains";
 import { SITE_NAME } from "@/lib/env";
 import "./globals.css";
 
-// Exposed as CSS variables; globals.css maps them onto Tailwind's font-sans/font-mono.
-const sans = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tight", display: "swap" });
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
+// Exposed as CSS variables; globals.css maps them onto font-sans, font-mono and `pixel`.
+const sans = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains-mono", display: "swap" });
+const pixel = Pixelify_Sans({ subsets: ["latin"], variable: "--font-pixelify", display: "swap" });
 
 export const metadata: Metadata = {
   title: {
@@ -28,26 +24,34 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08090a",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf6ef" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0c" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+    // The theme script sets data-theme before paint, so the server markup differs.
+    <html
+      lang="en"
+      className={`${sans.variable} ${mono.variable} ${pixel.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>
         <WalletProvider>
           <ToastProvider>
-            {/* Ambient background layers, painted beneath the app. */}
-            <Aurora />
-            <StreamField />
-            <div className="relative z-1 flex min-h-dvh flex-col">
+            <div className="flex min-h-dvh flex-col pb-9">
               <Nav />
-              <TickerTape />
               {children}
               <Footer />
             </div>
+            <StatusBar />
           </ToastProvider>
         </WalletProvider>
       </body>

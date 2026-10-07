@@ -38,13 +38,11 @@ export default function LiquidityPage() {
   );
 
   return (
-    <main className="page max-w-[780px] flex-1 pt-7 pb-20 max-sm:pt-5">
-      <div className="mb-[18px]">
-        <span className="eyebrow">Manage liquidity</span>
-        <h2 className="mt-3 text-[clamp(22px,3vw,30px)] tracking-[-0.04em]">
-          Uniswap V2 pools on {ACTIVE_CHAIN.name}
-        </h2>
-        <p className="mt-1.5 text-sm text-muted">
+    <main className="page max-w-[820px] flex-1 pt-3">
+      <div className="mb-5">
+        <h1 className="stamp">Liquidity</h1>
+        <p className="mt-3 text-[13.5px] text-muted">
+          Uniswap V2 pools on {ACTIVE_CHAIN.name}.
           For fixed-supply launches, and for coins that have already graduated.
           A coin still on its bonding curve trades here without a pool and seeds
           one itself when it fills.

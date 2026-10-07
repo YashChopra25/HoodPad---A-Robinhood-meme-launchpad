@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { isAddress, parseEther, parseUnits, type Address } from "viem";
+import CoinAvatar from "@/components/CoinAvatar";
 import Button from "@/components/ui/Button";
 import Field from "@/components/ui/Field";
 import Notice from "@/components/ui/Notice";
@@ -153,7 +154,8 @@ export default function CreateForm() {
   const show = (key: keyof FormState) => (submitted ? errors[key] : undefined);
 
   return (
-    <div className="flex flex-col gap-[22px]">
+    <div className="grid items-start gap-4 min-[1040px]:grid-cols-[minmax(0,1fr)_380px]">
+    <div className="flex flex-col gap-4">
       {!HAS_FACTORY ? (
         <Notice tone="warn">
           No launchpad factory is configured for {ACTIVE_CHAIN.name}, so this coin deploys straight
@@ -165,7 +167,7 @@ export default function CreateForm() {
       ) : null}
 
       <section className="card flex flex-col gap-[18px] p-6">
-        <div className="card-title">Identity</div>
+        <div className="pixel text-[22px]">Identity</div>
 
         <ImagePicker value={form.image} onChange={(value) => set("image", value)} />
         {USE_HARDCODED_LAUNCH_IMAGE ? (
@@ -259,7 +261,7 @@ export default function CreateForm() {
 
       <section className="card flex flex-col gap-4 p-6">
         <div>
-          <div className="card-title mb-1.5">How it trades</div>
+          <div className="pixel mb-1 text-[22px]">How it trades</div>
           <p className="field-hint">
             A curve launch is tradable the moment it exists. A fixed launch mints everything to you
             and leaves the market to you.
@@ -335,7 +337,7 @@ export default function CreateForm() {
 
       <section className="card flex flex-col gap-3 p-6">
         <div>
-          <div className="card-title mb-1.5">Launch protections</div>
+          <div className="pixel mb-1 text-[22px]">Launch protections</div>
           <p className="field-hint">
             Optional, and all fixed at launch. Every one is written so it can throttle buying but
             can never stop a holder selling.
@@ -418,6 +420,10 @@ export default function CreateForm() {
           onChange={(next) => set("renounce", next)}
         />
       </section>
+    </div>
+
+    <aside className="flex flex-col gap-4 min-[1040px]:sticky min-[1040px]:top-[88px]">
+      <Preview form={form} />
 
       <FeeSummary
         economics={economics}
@@ -440,6 +446,33 @@ export default function CreateForm() {
       ) : null}
 
       <SubmitRow busy={busy} step={step} onSubmit={() => void submit()} />
+    </aside>
+    </div>
+  );
+}
+
+/** How the coin will look on the trenches, updated as the form is filled in. */
+function Preview({ form }: { form: FormState }) {
+  const symbol = symbolOf(form) || "TICKER";
+  return (
+    <div className="card">
+      <div className="mb-3 flex items-center justify-between">
+        <span className="card-title">Preview</span>
+        <span className="chip chip-accent">{form.mode === "curve" ? "Curve" : "Fixed"}</span>
+      </div>
+      <div className="flex gap-3 rounded-xl bg-bg p-3 dark:bg-panel-2">
+        <CoinAvatar address={ZERO_ADDRESS} symbol={symbol} image={form.image || null} size={56} />
+        <div className="min-w-0 flex-1">
+          <div className="flex items-baseline gap-1.5">
+            <span className="truncate text-[15px] font-bold">{symbol}</span>
+            <span className="truncate text-[13px] text-muted">{form.name.trim() || "Coin name"}</span>
+          </div>
+          <div className="mono text-[12.5px] font-semibold text-up">now</div>
+          <p className="mt-1 line-clamp-2 text-xs text-dim">
+            {form.description.trim() || "Your description shows here."}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

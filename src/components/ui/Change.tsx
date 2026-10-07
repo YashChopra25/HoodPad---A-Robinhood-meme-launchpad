@@ -3,7 +3,7 @@ type Tone = "up" | "down" | "flat";
 const TONES: Record<Tone, string> = {
   up: "bg-up/12 text-up",
   down: "bg-sell/12 text-sell",
-  flat: "bg-white/7 text-muted",
+  flat: "bg-panel-2 text-muted",
 };
 
 const BASE =

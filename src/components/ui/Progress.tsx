@@ -11,7 +11,7 @@ export default function Progress({ value, label }: { value: number; label?: stri
     >
       {/* Width is the live value, so it is the one style computed at runtime. */}
       <div
-        className="h-full rounded-full bg-linear-to-r from-[#6f8f12] to-accent shadow-[0_0_12px_rgb(200_240_49/0.35)] transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] data-[complete=true]:from-up data-[complete=true]:to-[#8bffd0] data-[complete=true]:shadow-[0_0_12px_rgb(46_229_157/0.35)]"
+        className="h-full rounded-full bg-[linear-gradient(90deg,var(--color-fg)_0_calc(100%-6px),var(--color-lime)_calc(100%-6px))] transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] data-[complete=true]:bg-up"
         data-complete={percent >= 100 ? "true" : "false"}
         style={{ width: `${percent}%` }}
       />

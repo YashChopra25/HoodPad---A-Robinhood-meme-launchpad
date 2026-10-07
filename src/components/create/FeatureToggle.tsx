@@ -24,7 +24,7 @@ export default function FeatureToggle({
     <div>
       <button
         type="button"
-        className="group flex w-full cursor-pointer items-start gap-3 rounded-lg border border-line bg-elevated p-3.5 text-left transition-colors not-data-[on=true]:hover:border-line-strong data-[on=true]:border-accent/30 data-[on=true]:bg-accent/10"
+        className="group flex w-full cursor-pointer items-start gap-3 rounded-xl border border-line bg-bg p-3.5 dark:bg-elevated text-left transition-colors not-data-[on=true]:hover:border-line-strong data-[on=true]:border-fg/40 data-[on=true]:bg-lime/15"
         data-on={checked}
         role="switch"
         aria-checked={checked}

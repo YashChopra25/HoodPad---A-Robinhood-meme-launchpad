@@ -1,7 +1,7 @@
 import CoinCard from "@/components/CoinCard";
 import type { Coin } from "@/lib/types";
 
-const GRID = "grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] gap-3 max-sm:grid-cols-1";
+const GRID = "grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-2.5 max-sm:grid-cols-1";
 
 export default function CoinGrid({
   coins,
@@ -16,7 +16,7 @@ export default function CoinGrid({
     return (
       <div className={GRID}>
         {Array.from({ length: 6 }, (_, index) => (
-          <div key={index} className="skeleton h-[186px]" />
+          <div key={index} className="skeleton h-[112px]" />
         ))}
       </div>
     );

@@ -9,13 +9,11 @@ export const metadata: Metadata = {
 
 export default function CreatePage() {
   return (
-    <main className="page max-w-[720px] flex-1 pt-7 pb-20 max-sm:pt-5">
-      <div className="mb-[18px]">
-        <span className="eyebrow">Create token</span>
-        <h2 className="mt-3 text-[clamp(22px,3vw,30px)] tracking-[-0.04em]">
-          Launch on {ACTIVE_CHAIN.name}
-        </h2>
-        <p className="mt-1.5 text-sm text-muted">
+    <main className="page flex-1 pt-3">
+      <div className="mb-5">
+        <h1 className="stamp">Launch</h1>
+        <p className="mt-3 max-w-[620px] text-[13.5px] text-muted">
+          A new coin on {ACTIVE_CHAIN.name}.
           One transaction deploys the token, its market and its guards. Everything below is fixed at
           launch unless it says otherwise.
         </p>

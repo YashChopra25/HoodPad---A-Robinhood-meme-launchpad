@@ -76,8 +76,8 @@ export default function ImagePicker({
         <button
           type="button"
           onClick={() => mode === "upload" && inputRef.current?.click()}
-          className={`avatar size-24 rounded-2xl p-0 text-2xl text-dim ${
-            preview ? "border-solid bg-transparent" : "border-dashed bg-white/[0.022]"
+          className={`avatar size-24 rounded-2xl border-2 border-line-strong p-0 text-2xl text-dim ${
+            preview ? "border-solid bg-transparent" : "border-dashed bg-bg dark:bg-elevated"
           } ${mode === "upload" ? "cursor-pointer" : "cursor-default"}`}
           aria-label="Choose token image"
         >

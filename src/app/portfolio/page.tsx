@@ -12,9 +12,8 @@ import { useWatchlist } from "@/hooks/useWatchlist";
 import { HAS_FACTORY, NATIVE_SYMBOL } from "@/lib/env";
 import { formatEth, shortenAddress } from "@/lib/format";
 
-const MAIN = "page flex-1 pt-7 pb-20 max-sm:pt-5";
-const TITLE = "mt-3 text-[clamp(22px,3vw,30px)] tracking-[-0.04em]";
-const SECTION_HEAD = "mb-3.5 flex items-center justify-between gap-3";
+const MAIN = "page flex-1 pt-3";
+const SECTION_HEAD = "mb-3 flex items-center justify-between gap-3";
 
 export default function PortfolioPage() {
   const wallet = useWalletContext();
@@ -36,9 +35,9 @@ export default function PortfolioPage() {
   if (!wallet.isConnected) {
     return (
       <main className={MAIN}>
-        <div className="mb-[18px]">
-          <span className="eyebrow">Portfolio</span>
-          <h2 className={TITLE}>Your launches and watchlist</h2>
+        <div className="mb-5">
+          <h1 className="stamp">Portfolio</h1>
+          <p className="mt-3 text-[13.5px] text-muted">Your launches and watchlist.</p>
         </div>
         <Notice>Connect a wallet to see the coins you have created.</Notice>
       </main>
@@ -46,12 +45,12 @@ export default function PortfolioPage() {
   }
 
   return (
-    <main className={`${MAIN} flex flex-col gap-[26px]`}>
-      <div>
-        <span className="eyebrow">Portfolio</span>
-        <h2 className={TITLE}>
-          <span className="mono">{shortenAddress(wallet.account)}</span>
-        </h2>
+    <main className={`${MAIN} flex flex-col gap-8`}>
+      <div className="flex flex-wrap items-center gap-3">
+        <h1 className="stamp">Portfolio</h1>
+        <span className="mono rounded-xl bg-panel px-3 py-2 text-[13px] text-muted dark:border dark:border-line">
+          {shortenAddress(wallet.account)}
+        </span>
       </div>
 
       <StatGrid>
@@ -66,7 +65,7 @@ export default function PortfolioPage() {
 
       <section>
         <div className={SECTION_HEAD}>
-          <h3>Coins you created</h3>
+          <h2 className="pixel text-[22px]">Coins you created</h2>
           <Link href="/create" className="btn btn-sm">
             Create another
           </Link>
@@ -77,7 +76,7 @@ export default function PortfolioPage() {
           empty={
             <div className="empty">
               <strong>You have not launched a coin yet.</strong>
-              <Link href="/create" className="text-accent">
+              <Link href="/create" className="font-semibold text-fg underline underline-offset-2">
                 Launch your first
               </Link>
             </div>
@@ -87,7 +86,7 @@ export default function PortfolioPage() {
 
       <section>
         <div className={SECTION_HEAD}>
-          <h3>Watchlist</h3>
+          <h2 className="pixel text-[22px]">Watchlist</h2>
           <ImportCoin />
         </div>
         <CoinGrid

@@ -48,7 +48,7 @@ export default function TradeFeed({
       {[...trades].reverse().map((trade) => (
         <div
           key={trade.key}
-          className={`${GRID} mono border-b border-line text-[12.5px] last:border-b-0 hover:bg-white/5`}
+          className={`${GRID} mono border-b border-line text-[12.5px] last:border-b-0 hover:bg-panel-2`}
         >
           <span
             className={`justify-self-start rounded-[5px] px-[7px] py-px text-[10.5px] font-bold tracking-[0.06em] uppercase ${

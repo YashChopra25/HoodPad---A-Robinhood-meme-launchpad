@@ -6,8 +6,6 @@ import { useSearchParams } from "next/navigation";
 import CoinGrid from "@/components/CoinGrid";
 import CoinTable from "@/components/CoinTable";
 import ImportCoin from "@/components/ImportCoin";
-import MetricStrip from "@/components/MetricStrip";
-import Spotlight from "@/components/Spotlight";
 import Notice from "@/components/ui/Notice";
 import { filterCoins, sortCoins, useCoins, type SortKey } from "@/hooks/useCoins";
 import { useWatchlist } from "@/hooks/useWatchlist";
@@ -18,7 +16,7 @@ import type { Coin } from "@/lib/types";
 type Stage = "all" | "live" | "graduated" | "fixed" | "watchlist";
 
 const SORTS: Array<{ key: SortKey; label: string }> = [
-  { key: "trending", label: "🔥 Trending" },
+  { key: "trending", label: "Trending" },
   { key: "mcap", label: "Market cap" },
   { key: "new", label: "Newest" },
 ];
@@ -30,7 +28,7 @@ const STAGES: Array<{ key: Stage; label: string; match: (coin: Coin) => boolean 
   { key: "fixed", label: "Fixed supply", match: (coin) => coin.curveSupply === 0n },
 ];
 
-const MAIN = "page flex-1 pt-7 pb-20 max-sm:pt-5";
+const MAIN = "page flex-1 pt-3";
 
 // The search box reads `?q=` from the URL, which needs a Suspense boundary so
 // the rest of the route can still prerender.
@@ -39,7 +37,7 @@ export default function CoinsPage() {
     <Suspense
       fallback={
         <main className={MAIN}>
-          <div className="skeleton h-[360px]" />
+          <div className="skeleton h-[420px]" />
         </main>
       }
     >
@@ -54,7 +52,7 @@ function Board() {
   const { watched } = useWatchlist();
   const [sort, setSort] = useState<SortKey>("trending");
   const [stage, setStage] = useState<Stage>("all");
-  const [view, setView] = useState<"grid" | "table">("grid");
+  const [view, setView] = useState<"grid" | "table">("table");
 
   // A new search from the nav replaces whatever was typed here.
   const urlQuery = params.get("q") ?? "";
@@ -87,35 +85,24 @@ function Board() {
   };
 
   return (
-    <main className={`${MAIN} flex flex-col gap-[22px]`}>
+    <main className={`${MAIN} flex flex-col gap-5`}>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <span className="eyebrow">
-            <span className="live-dot" /> {ACTIVE_CHAIN.name}
-          </span>
-          <h1 className="mt-3 text-[clamp(28px,4vw,40px)] tracking-[-0.05em]">The board</h1>
-          <p className="mt-1.5 text-muted">
+          <h1 className="stamp">Board</h1>
+          <p className="mt-3 flex items-center gap-2 text-[13px] text-muted">
+            <span className="live-dot" />
             {HAS_FACTORY
-              ? "Every launch, read straight from the registry contract and refreshed every 20 seconds."
-              : "No factory is configured, so this board lists coins created or imported in this browser."}
+              ? `Every launch on ${ACTIVE_CHAIN.name}, read from the registry and refreshed every 20s.`
+              : "No factory is configured, so this lists coins created or imported in this browser."}
           </p>
         </div>
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
           <ImportCoin />
-          <button
-            className="btn size-[34px] p-0"
-            onClick={() => void refresh()}
-            aria-label="Refresh"
-            title="Refresh"
-          >
+          <button className="btn size-10 p-0" onClick={() => void refresh()} aria-label="Refresh" title="Refresh">
             ↻
           </button>
         </div>
       </div>
-
-      {coins.length > 0 ? <MetricStrip coins={coins} /> : null}
-
-      {stage === "all" && !query ? <Spotlight coins={coins} /> : null}
 
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-2.5">
@@ -128,7 +115,7 @@ function Board() {
                 aria-pressed={stage === entry.key}
                 onClick={() => setStage(entry.key)}
               >
-                {entry.label} <span className="font-mono text-[11px] opacity-60">{counts[entry.key]}</span>
+                {entry.label} <span className="font-mono text-[11px] opacity-50">{counts[entry.key]}</span>
               </button>
             ))}
             <button
@@ -137,14 +124,14 @@ function Board() {
               aria-pressed={stage === "watchlist"}
               onClick={() => setStage("watchlist")}
             >
-              ★ Watchlist <span className="font-mono text-[11px] opacity-60">{counts.watchlist}</span>
+              ★ Watchlist <span className="font-mono text-[11px] opacity-50">{counts.watchlist}</span>
             </button>
           </div>
 
           <div className="flex-1" />
 
           <input
-            className="input max-w-[260px]"
+            className="input max-w-[260px] border-transparent bg-panel dark:border-line dark:bg-panel"
             placeholder="Search name, ticker or contract"
             aria-label="Search coins"
             value={query}
@@ -166,10 +153,10 @@ function Board() {
 
           <div className="segmented" aria-label="View">
             <button type="button" aria-pressed={view === "grid"} onClick={() => setView("grid")}>
-              ▦ Grid
+              Cards
             </button>
             <button type="button" aria-pressed={view === "table"} onClick={() => setView("table")}>
-              ☰ Table
+              Table
             </button>
           </div>
         </div>
@@ -198,7 +185,7 @@ function Board() {
                 ) : (
                   <>
                     Be the first —{" "}
-                    <Link href="/create" className="text-accent">
+                    <Link href="/create" className="font-semibold text-fg underline underline-offset-2">
                       launch one
                     </Link>
                     .

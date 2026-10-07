@@ -17,7 +17,7 @@ export default function CaChip({ address }: { address: string }) {
     <button
       type="button"
       // Raised above a card's stretched link overlay so it stays clickable.
-      className="relative z-[2] inline-flex cursor-pointer items-center gap-[5px] rounded-md border border-line-strong bg-transparent px-[7px] py-0.5 font-mono text-[11px] text-muted transition-colors hover:border-line-hover hover:text-fg"
+      className="relative z-[2] inline-flex cursor-pointer items-center gap-[5px] rounded-md bg-panel-2 px-[7px] py-0.5 font-mono text-[11px] text-muted transition-colors hover:bg-panel-3 hover:text-fg"
       title={address}
       aria-label="Copy contract address"
       onClick={async (event) => {

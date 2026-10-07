@@ -8,7 +8,7 @@ export function HoodpadMark({ className = "" }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 3000 3000"
-      className={`shrink-0 drop-shadow-[0_0_14px_rgb(200_240_49/0.35)] ${className}`.trim()}
+      className={`shrink-0 ${className}`.trim()}
       aria-hidden="true"
     >
       <rect width="3000" height="3000" rx="680" fill="#c8f031" />

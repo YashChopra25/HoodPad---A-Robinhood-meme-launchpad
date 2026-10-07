@@ -21,8 +21,12 @@ export default function WalletButton() {
   if (!wallet.isConnected) {
     return (
       <>
-        <Button variant="primary" onClick={() => setPickerOpen(true)} loading={wallet.status === "connecting"}>
-          Connect Wallet
+        <Button onClick={() => setPickerOpen(true)} loading={wallet.status === "connecting"}>
+          <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true">
+            <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3M4 7.5V17a2 2 0 0 0 2 2h14V8H6.5A2.5 2.5 0 0 1 4 7.5Z" />
+            <circle cx="16" cy="13.5" r="1" fill="currentColor" />
+          </svg>
+          Connect wallet
         </Button>
         <WalletPicker open={pickerOpen} onClose={() => setPickerOpen(false)} />
       </>
@@ -41,14 +45,14 @@ export default function WalletButton() {
     <>
       <Button onClick={() => setAccountOpen(true)}>
         <span className="mono">{shortenAddress(wallet.account)}</span>
-        <span className="whitespace-nowrap text-dim">
+        <span className="whitespace-nowrap text-dim max-sm:hidden">
           {formatEth(wallet.balance, 4)} {NATIVE_SYMBOL}
         </span>
       </Button>
 
       <Modal open={accountOpen} title="Wallet" onClose={() => setAccountOpen(false)}>
         <div className="flex flex-col gap-4">
-          <div className="card">
+          <div className="card bg-panel">
             <div className="card-title mb-2">{wallet.selectedWallet?.info.name ?? "Connected"}</div>
             <div className="mono text-[13.5px] wrap-anywhere">{wallet.account}</div>
             <div className="my-4 h-px bg-line" />

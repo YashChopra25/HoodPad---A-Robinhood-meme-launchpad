@@ -76,7 +76,7 @@ function ToastRow({ toast, onDismiss }: { toast: Toast; onDismiss: (id: number) 
 
   return (
     <div
-      className={`flex animate-rise items-start gap-2.5 rounded-lg border border-l-[3px] border-line-strong bg-panel-2 px-3.5 py-3 text-[13px] shadow-[inset_0_1px_0_rgb(255_255_255/0.03),0_18px_44px_rgb(0_0_0/0.5)] ${TONES[toast.tone]}`}
+      className={`flex animate-rise items-start gap-2.5 rounded-xl border border-l-[3px] border-line bg-bg px-3.5 py-3 text-[13px] shadow-pop ${TONES[toast.tone]}`}
     >
       <span aria-hidden="true">{toast.tone === "error" ? "✕" : toast.tone === "success" ? "✓" : "›"}</span>
       <div className="flex-1">
@@ -86,7 +86,7 @@ function ToastRow({ toast, onDismiss }: { toast: Toast; onDismiss: (id: number) 
             href={explorerTxUrl(toast.hash)}
             target="_blank"
             rel="noreferrer"
-            className="text-accent underline underline-offset-2"
+            className="font-semibold underline underline-offset-2"
           >
             View transaction
           </a>
